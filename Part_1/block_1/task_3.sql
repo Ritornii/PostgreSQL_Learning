@@ -7,6 +7,7 @@
 CREATE TABLE warehouse
 (
     id SERIAL,
+    ltd TEXT NOT NULL,
     name_wh TEXT,
     address_wh TEXT NOT NULL,
     phone_wh TEXT NOT NULL,
@@ -18,41 +19,51 @@ CREATE TABLE warehouse
 CREATE TABLE sections
 (
     id SERIAL,
-    id_wh INT REFERENCES warehouse (id),
+    id_wh INT,
     row INTEGER NOT NULL,
     segment TEXT,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_wh)
+        REFERENCES warehouse (id)
 );
 
 --Таблица №3 - Ячейки: ID | ID секции | Номер места (ячейки)
 CREATE TABLE cells
 (
     id SERIAL,
-    id_section INT REFERENCES sections (id),
+    id_section INT,
     num_cell INTEGER NOT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_section)
+        REFERENCES sections (id)
 );
 
 --Таблица №4 - Груз: Штрих код груза (продукта) | ID ячейки | Классификация груза
 CREATE TABLE items
 (
-    bar_code NUMERIC(13,0) UNIQUE,
-    id_cell INT REFERENCES cells (id),
-    classification TEXT
+    bar_code BIGSERIAL NOT NULL
+    CHECK (1000000000000 <= bar_code <= 9999999999999),
+    id_cell INT,
+    classification TEXT,
 
-    PRIMARY KEY (bar_code)
-)
+    PRIMARY KEY (bar_code),
+    FOREIGN KEY (id_cell)
+        REFERENCES cells (id)
+);
 
 
 -- -------------------------------------------------------------------------------
 -- ЗАПРОСЫ НА ЗАПОЛНЕНИЕ ТАБЛИЦ
 -- -------------------------------------------------------------------------------
 
-INSERT INTO warehouse SET name_wh='ЛИНК', address_wh='300028, РФ, Тульская область, г. Тула, ул. Болдина, д. 94', phone_wh='+7(4872)21-22-14 (доб. 105)';
-INSERT INTO warehouse SET name_wh='ПЕТРОВСКОЕ_РФЦ', address_wh='143541, Московская обл., г. Истра, с. Петровское, территория МПСК Ориентир-Запад, зд. 1А', phone_wh='+7(495)232-10-00 (доб. 71953)';
-INSERT INTO warehouse SET name_wh='ЖУКОВСКИЙ_РФЦ', address_wh='140182, Московская область, г. Жуковский, район Замоскворечье, д. 457, стр. 5', phone_wh='+7 915 130-41-80';
+-- Заполнение таблицы №1 - Склад:
+INSERT INTO warehouse (name_wh, ltd, address_wh, phone_wh)
+    VALUES ("ЛИНК", "ЛИНК", "300028, РФ, Тульская область, г. Тула, ул. Болдина, д. 94", "+7(4872)21-22-14 (доб. 105)"),
+        ("ПЕТРОВСКОЕ_РФЦ", "OZON", "143541, РФ, Московская область, г. Истра, с. Петровское, территория МПСК Ориентир-Запад, зд. 1А", "+7(495)232-10-00 (доб. 71953)"),
+        ("ЖУКОВСКИЙ_РФЦ", "OZON", "140182, РФ, Московская область, г. Жуковский, район Замоскворечье, д. 457, стр. 5", "+7 915 130-41-80"),
+        ("СЦ_Омск_ВБ", "Wildberries", "644105, РФ, Омская область, г. Омск, ул. Раздольная, д. 1А", "+7 974 152-42-31")
 
-
-INSERT INTO sections SET name_wh='ЖУКОВСКИЙ_РФЦ', address_wh='140182, Московская область, г. Жуковский, район Замоскворечье, д. 457, стр. 5', phone_wh='+7 915 130-41-80';
+-- Заполнение таблицы №2 - Секция:
+IN
