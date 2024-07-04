@@ -34,6 +34,7 @@ CREATE TABLE cells
     id SERIAL,
     id_section INT,
     num_cell INTEGER NOT NULL,
+    status_cell BOOLEAN NOT NULL,
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_section)
@@ -44,7 +45,7 @@ CREATE TABLE cells
 CREATE TABLE items
 (
     bar_code BIGSERIAL NOT NULL
-    CHECK (1000000000000 <= bar_code <= 9999999999999),
+    CONSTRAINT valid_bar_code CHECK (1000000000000 <= bar_code <= 9999999999999),
     id_cell INT,
     classification TEXT,
 
