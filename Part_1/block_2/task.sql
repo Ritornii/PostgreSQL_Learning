@@ -66,8 +66,8 @@ INSERT INTO warehouse (name_wh, ltd, address_wh, phone_wh)
         ("СЦ_Омск_ВБ", "Wildberries", "644105, РФ, Омская область, г. Омск, ул. Раздольная, д. 1А", "+7 974 152-42-31")
 
 -- Заполнение таблицы №2 - Секция:
-INSERT INTO sections (, row, segment)
-    VALUES (ro)
+INSERT INTO sections (id_wh, row, segment)
+    VALUES
 
 
 
