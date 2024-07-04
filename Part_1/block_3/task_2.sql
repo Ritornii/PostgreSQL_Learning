@@ -5,7 +5,7 @@
 --Обновляем телефон склада с конкретным адресом:
 BEGIN;
 UPDATE warehouse
-    SET phone_wh = "+79415674671";
+    SET phone_wh = "+79415674671"
     WHERE address_wh = "какой-то адрес"
 COMMIT;
 
