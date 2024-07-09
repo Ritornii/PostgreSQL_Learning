@@ -25,7 +25,7 @@ CREATE TABLE sections
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_wh)
-        REFERENCES warehouse (id) ON DELETE CASCADE
+        REFERENCES warehouse (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
