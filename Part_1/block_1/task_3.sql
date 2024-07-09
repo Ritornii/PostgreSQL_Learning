@@ -25,7 +25,9 @@ CREATE TABLE sections
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_wh)
-        REFERENCES warehouse (id)
+        REFERENCES warehouse (id) ON DELETE CASCADE
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 --Таблица №3 - Ячейки: ID | ID секции | Номер места (ячейки)
@@ -39,6 +41,8 @@ CREATE TABLE cells
     PRIMARY KEY (id),
     FOREIGN KEY (id_section)
         REFERENCES sections (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 --Таблица №4 - Груз: Штрих код груза (продукта) | ID ячейки | Классификация груза
@@ -51,7 +55,9 @@ CREATE TABLE items
 
     PRIMARY KEY (bar_code),
     FOREIGN KEY (id_cell)
-        REFERENCES cells (id)
+        REFERENCES cells (id) 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 
